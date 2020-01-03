@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.iwatakhr.mslmgt.infrastructure.repository.TrgRecordMapper">
+
+	<select id="findSampleById"
+		resultType="com.iwatakhr.mslmgt.infrastructure.entity.TrgRecordEntity">
+		select
+			training_record_id, training_start_time, training_events_id
+		from mslmgt.training_records
+		where training_record_id = #{id}
+	</select>
+</mapper>
