@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @EnableAutoConfiguration
-@RequestMapping("/MslMgt")
 public class App {
 
 	@RequestMapping("/hello")
-	public String hello(@RequestParam(value = "name", required = false, defaultValue = "MslMgt") String name,
+	public String hello(@RequestParam(value = "name", required = false, defaultValue = "MslMgtV2") String name,
 			Model model) {
 		model.addAttribute("name", name);
 		return "helloworld";
