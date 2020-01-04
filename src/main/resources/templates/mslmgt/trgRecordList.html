@@ -3,26 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <script src="/MslMgt/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
-<script src="/MslMgt//webjars/jquery/3.1.1/jquery.min.js"></script>
+<script src="/MslMgt/webjars/jquery/3.1.1/jquery.min.js"></script>
 <link rel="stylesheet"
 	href="/MslMgt/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
 <title>トレーニング記録一覧</title>
 </head>
 <body>
 	<h1>トレーニング記録一覧</h1>
-		<table class="table table-bordered table-condensed table-hover">
-			<thead>
-				<tr>
-					<th>種目</th>
-					<th>日付</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="trgRecord : ${trgRecordList}" th:object="${trgRecord}">
-					<td th:text="*{trainingStartTime}"></td>
-					<td th:text="*{eventsName}"></td>
-				</tr>
-			</tbody>
-		</table>
+	<div class="btn-group" role="group">
+		<a th:href="@{/TrgRecordListRegistEdit/show}" class="btn btn-default" role="button">新規登録</a>
+		
+	</div>
+	<table class="table table-bordered table-condensed table-hover">
+		<thead>
+			<tr>
+				<th>種目</th>
+				<th>日付</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="trgRecord : ${trgRecordList}" th:object="${trgRecord}">
+				<td th:text="*{trainingStartTime}"></td>
+				<td th:text="*{eventsName}"></td>
+			</tr>
+		</tbody>
+	</table>
 </body>
 </html>

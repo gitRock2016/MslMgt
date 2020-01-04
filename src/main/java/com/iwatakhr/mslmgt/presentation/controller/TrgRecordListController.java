@@ -6,10 +6,8 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.iwatakhr.mslmgt.application.TrgRecordListApplication;
-import com.iwatakhr.mslmgt.application.TrgRecordListApplicationImpl;
 import com.iwatakhr.mslmgt.application.dto.TrgRecordListDto;
 
 @Controller
@@ -32,13 +30,8 @@ public class TrgRecordListController {
 	 */
 	@RequestMapping("/show")
 	public String show(Model model) {
-		// TODO あとでDIする
-//		TrgRecordListApplicationImpl app = new TrgRecordListApplicationImpl();
-//		List<TrgRecordListDto> trgRecordList = app.show();
 		List<TrgRecordListDto> trgRecordList = trgRecordApp.show();
-		
 		model.addAttribute("trgRecordList", trgRecordList);
-		
 		return "/mslmgt/trgRecordList";
 	}
 

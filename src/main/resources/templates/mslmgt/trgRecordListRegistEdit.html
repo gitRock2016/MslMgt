@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script src="/MslMgt/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+<script src="/MslMgt/webjars/jquery/3.1.1/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="/MslMgt/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+<title>トレーニング記録登録</title>
+</head>
+<script>
+	$(function() {
+
+		$("#regBtn").on('click', function() {
+			$("#TrgRecordListRegistEditForm").submit();
+		});
+
+	})
+</script>
+<body>
+	<h1>トレーニング記録登録</h1>
+	
+	
+	<form role="form" action="/TrgRecordListRegistEdit/regist"
+		th:action="@{/TrgRecordListRegistEdit/regist}" th:object="${trgRecordListRegistEdit}"
+		method="post" id ="TrgRecordListRegistEditForm">
+
+		<button class="btn btn-primary" id="regBtn">新規登録</button>
+
+		<!-- 種目 -->
+		<div class="form-group">
+			<label class="control-label" for="eventsNameSelect">種目：</label>
+			<select
+				class="form-control" id="eventsNameSelect" name="enSelect">
+				<option value=""></option>
+				<option th:each="item : ${EventsName_SelectList}"
+							 th:value="${item.key}"
+							 th:text="${item.value}"
+							 th:selected="${item.value} == *{eventsName}"></option>
+			</select>
+		</div>
+	
+		<!-- 日付 -->
+		<div class="form-group">
+			<input type="datetime-local" name="trainingStartTime" step="60"/>
+		</div>
+
+	</form>
+
+</body>
+</html>

@@ -5,41 +5,24 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import com.iwatakhr.mslmgt.application.dto.TrgRecordListDto;
 import com.iwatakhr.mslmgt.infrastructure.entity.TrgRecordEntity;
-import com.iwatakhr.mslmgt.infrastructure.repository.TrgRecordMapper;
 import com.iwatakhr.mslmgt.infrastructure.repository.TrgRecordRepository;
 
 @Service
 public class TrgRecordListApplicationImpl implements TrgRecordListApplication{
 	
 	TrgRecordRepository trgRecordRepo;
-	// TODO 実験用
-	TrgRecordMapper trgRecordMapper;
 
-//	public TrgRecordListApplicationImpl(TrgRecordRepository trgRecordRepo) {
-//		this.trgRecordRepo = trgRecordRepo;
-//	}
-	public TrgRecordListApplicationImpl(TrgRecordRepository trgRecordRepo, TrgRecordMapper trgRecordMapper) {
+	public TrgRecordListApplicationImpl(TrgRecordRepository trgRecordRepo) {
 		super();
 		this.trgRecordRepo = trgRecordRepo;
-		this.trgRecordMapper = trgRecordMapper;
 	}
-
-
 
 	@Override
 	public List<TrgRecordListDto> show() {
-		
-		
-// TODO 実験用
-//		TrgRecordEntity e =trgRecordRepo.findSampleById(1);
-//		TrgRecordEntity e2 =trgRecordMapper.findSampleById(1);
-//		int c =trgRecordRepo.count();
-		
 		return mock2();
 //		return mock1();
 	}
@@ -47,7 +30,7 @@ public class TrgRecordListApplicationImpl implements TrgRecordListApplication{
 	// TODO mock
 	List<TrgRecordListDto> mock2(){
 
-		List<TrgRecordEntity> entityList = trgRecordRepo.findById(1);
+		List<TrgRecordEntity> entityList = trgRecordRepo.findByTrgRecordId(1);
 		List<TrgRecordListDto> arrayList = new ArrayList<TrgRecordListDto>();
 		for(TrgRecordEntity en : entityList) {
 			TrgRecordListDto d = new TrgRecordListDto();
