@@ -1,10 +1,11 @@
 package com.iwatakhr.mslmgt.application.dto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class TrgRecordListRegistEditDto {
-	private String trainingStartTime;
-	private String eventsName;
+	private LocalDateTime trainingStartTime;
+	private String eventsNameId;
 	private List<TrgRecordDetailDto> detailList;
 	
 	
@@ -12,26 +13,26 @@ public class TrgRecordListRegistEditDto {
 		super();
 	}
 	public TrgRecordListRegistEditDto(
-			  String trainingStartTime
+			LocalDateTime trainingStartTime
 			, String eventsName
 			, List<TrgRecordDetailDto> detailList) {
 		this.trainingStartTime = trainingStartTime;
-		this.eventsName = eventsName;
+		this.eventsNameId = eventsName;
 		this.detailList = detailList;
 	}
 	
 	
-	public String getTrainingStartTime() {
+	public LocalDateTime getTrainingStartTime() {
 		return trainingStartTime;
 	}
-	public void setTrainingStartTime(String trainingStartTime) {
+	public void setTrainingStartTime(LocalDateTime trainingStartTime) {
 		this.trainingStartTime = trainingStartTime;
 	}
-	public String getEventsName() {
-		return eventsName;
+	public String getEventsNameId() {
+		return eventsNameId;
 	}
-	public void setEventsName(String eventsName) {
-		this.eventsName = eventsName;
+	public void setEventsNameId(String eventsNameId) {
+		this.eventsNameId = eventsNameId;
 	}
 	public List<TrgRecordDetailDto> getDetailList() {
 		return detailList;

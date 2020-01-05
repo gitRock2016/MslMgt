@@ -1,6 +1,8 @@
 package com.iwatakhr.mslmgt.presentation.controller;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,12 @@ public class TrgRecordListController {
 		this.trgRecordApp = trgRecordApp;
 	}
 	
+	final static Map<String, String> EventsName_SelectList = new LinkedHashMap<String, String>() {
+		{
+			put("100", "ペクトラル");
+			put("101", "上腕3頭筋");
+		}
+	};
 	/**
 	 * 初期表示
 	 * @param name
@@ -32,6 +40,7 @@ public class TrgRecordListController {
 	public String show(Model model) {
 		List<TrgRecordListDto> trgRecordList = trgRecordApp.show();
 		model.addAttribute("trgRecordList", trgRecordList);
+		model.addAttribute("EventsName_SelectList", EventsName_SelectList);
 		return "/mslmgt/trgRecordList";
 	}
 

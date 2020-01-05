@@ -1,5 +1,9 @@
 package com.iwatakhr.mslmgt.application;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,23 +11,32 @@ import org.springframework.stereotype.Service;
 
 import com.iwatakhr.mslmgt.application.dto.TrgRecordDetailDto;
 import com.iwatakhr.mslmgt.application.dto.TrgRecordListRegistEditDto;
+import com.iwatakhr.mslmgt.infrastructure.repository.TrgRecordRepository;
 
 @Service
 public class TrgRecordListRegistEditApplicationImpl implements TrgRecordListRegistEditApplication{
 	
+	TrgRecordRepository trgRecordRepository;
+	
+	public TrgRecordListRegistEditApplicationImpl(TrgRecordRepository trgRecordRepository) {
+		super();
+		this.trgRecordRepository = trgRecordRepository;
+	}
+
 	/**
 	 * 編集時に呼び出す
 	 */
 	@Override
 	public TrgRecordListRegistEditDto show() {
-		return mock1();
+		return show_mock1();
 	}
 	
 	// TODO mock
-	TrgRecordListRegistEditDto mock1() {
+	TrgRecordListRegistEditDto show_mock1() {
 		TrgRecordListRegistEditDto dto = new TrgRecordListRegistEditDto();
-		dto.setEventsName("2頭金");
-		dto.setTrainingStartTime("2019 /12/1 4:22:11");
+		dto.setEventsNameId("2頭金");
+//		dto.setTrainingStartTime("2019 /12/1 4:22:11");
+		dto.setTrainingStartTime(LocalDateTime.of(2019,12,1,4,22,11));
 		
 		List<TrgRecordDetailDto> detailList=new ArrayList<TrgRecordDetailDto>();
 		TrgRecordDetailDto e1=new TrgRecordDetailDto();
@@ -40,6 +53,102 @@ public class TrgRecordListRegistEditApplicationImpl implements TrgRecordListRegi
 		
 		return dto;
 	}
+
+	@Override
+	public void regist(TrgRecordListRegistEditDto dto) {
+		//TODO		regist_mock1();
+		// training_recordsテーブルへ登録
+		Integer training_record_id=trgRecordRepository.countMaxTrgReocords()+1;
+		Integer personal_id=1; // TODO 固定とする、岩田
+		LocalDateTime training_start_time = dto.getTrainingStartTime();
+//		LocalDateTime training_start_time = LocalDateTime.of(LocalDate.of(2019, 12, 1), LocalTime.of(12, 43));
+		Integer training_events_id=Integer.parseInt(dto.getEventsNameId());
+		LocalDateTime system_insert_time=LocalDateTime.now();
+		LocalDateTime  sysytem_update_time=LocalDateTime.now();
+//		String weight="35.12";
+//		BigDecimal weight=BigDecimal.valueOf(35.12);
+//		Integer count=15;
+
+		
+		trgRecordRepository.insertTrainingRecords(
+				  training_record_id
+				, personal_id
+				, training_start_time
+				, training_events_id
+				, system_insert_time
+				, sysytem_update_time);
+		
+		// training_record_detailテーブルへ登録
+		if(dto.getDetailList().size()!=0) {
+			int seq=1;
+			for(TrgRecordDetailDto d : dto.getDetailList()) {
+				// TODO 相関チェックはあとでつくるので、応急処理のチェックをいれる
+				if(!"".equals(d.getWeight()) && !(d.getTrainingCount()==null)) {
+					trgRecordRepository.insertTrainingRecordDetail(
+							training_record_id
+							, seq++
+							, new BigDecimal(d.getWeight())
+							, d.getTrainingCount()
+							, system_insert_time
+							, sysytem_update_time
+							);
+				}
+			}
+		}
+		
+//		Integer[] seqs= {1,2,3};
+//		for(int seq : seqs) {
+//			trgRecordRepository.insertTrainingRecordDetail(
+//					training_record_id
+//					, seq
+//					, weight
+//					, count
+//					, system_insert_time
+//					, sysytem_update_time);
+//		}
+		
+		
+
+		
+	}
+	
+	// TODO mock
+	private void regist_mock1() {
+		// training_recordsテーブルへ登録
+		Integer training_record_id=trgRecordRepository.countMaxTrgReocords()+1;
+//		Integer training_record_id=100;
+		Integer personal_id=1; // 岩田
+		LocalDateTime training_start_time = LocalDateTime.of(LocalDate.of(2019, 12, 1), LocalTime.of(12, 43));
+		Integer training_events_id=100; // ペクトラル
+		LocalDateTime system_insert_time=LocalDateTime.now();
+		LocalDateTime  sysytem_update_time=LocalDateTime.now();
+//		String weight="35.12";
+		BigDecimal weight=BigDecimal.valueOf(35.12);
+		Integer count=15;
+
+		
+		trgRecordRepository.insertTrainingRecords(
+				  training_record_id
+				, personal_id
+				, training_start_time
+				, training_events_id
+				, system_insert_time
+				, sysytem_update_time);
+		
+		// training_record_detailテーブルへ登録
+		Integer[] seqs= {1,2,3};
+		for(int seq : seqs) {
+			trgRecordRepository.insertTrainingRecordDetail(
+					training_record_id
+					, seq
+					, weight
+					, count
+					, system_insert_time
+					, sysytem_update_time);
+		}
+	}
+	
+	
 	
 
 }

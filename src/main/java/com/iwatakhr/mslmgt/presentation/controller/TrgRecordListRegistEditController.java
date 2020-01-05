@@ -1,6 +1,8 @@
 package com.iwatakhr.mslmgt.presentation.controller;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.iwatakhr.mslmgt.application.TrgRecordListRegistEditApplication;
+import com.iwatakhr.mslmgt.application.dto.TrgRecordDetailDto;
+import com.iwatakhr.mslmgt.application.dto.TrgRecordListRegistEditDto;
+import com.iwatakhr.mslmgt.presentation.controller.form.TrgRecordListRegistEditDetailForm;
 import com.iwatakhr.mslmgt.presentation.controller.form.TrgRecordListRegistEditForm;
 
 @Controller
@@ -41,7 +46,11 @@ public class TrgRecordListRegistEditController {
 	 */
 	@GetMapping("/show")
 	public String show(TrgRecordListRegistEditForm form, Model model) {
-		model.addAttribute("trgRecordListRegistEdit", form);
+		
+		// TODO mockデータ
+//		form = new TrgRecordListRegistEditForm();
+		
+		model.addAttribute("trgRecordListRegistEdit", new TrgRecordListRegistEditForm());
 		model.addAttribute("EventsName_SelectList", EventsName_SelectList);
 		return "/mslmgt/trgRecordListRegistEdit";
 	}
@@ -55,8 +64,22 @@ public class TrgRecordListRegistEditController {
 	@PostMapping("/regist")
 	public String regist(TrgRecordListRegistEditForm form, Model model) {
 		
-		// TODO formを利用してデータを登録する
+		TrgRecordListRegistEditDto dto =new TrgRecordListRegistEditDto();
+		dto.setEventsNameId(form.getEventsNameId());
+		dto.setTrainingStartTime(form.getTrainingStartTime());
+		int seq=1;
+		ArrayList<TrgRecordDetailDto> detailList = new ArrayList<TrgRecordDetailDto>();
+		for(TrgRecordListRegistEditDetailForm  f : form.getDetailForms()) {
+			TrgRecordDetailDto d=new TrgRecordDetailDto();
+			d.setSeq(seq++);
+			d.setWeight(f.getWeight());
+			d.setTrainingCount(f.getCount());
+			detailList.add(d);
+		}
+		dto.setDetailList(detailList);
 		
+		// TODO formを利用してデータを登録する
+		trgRecordListRegistEditApplication.regist(dto);
 		return "redirect:/TrgRecordList/show";
 	}
 	

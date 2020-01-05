@@ -23,8 +23,19 @@
 		</thead>
 		<tbody>
 			<tr th:each="trgRecord : ${trgRecordList}" th:object="${trgRecord}">
+				<!-- <td th:text="*{eventsNameId}"></td> -->
+				<td>
+<!-- 					TODO Linkに変更すること、暫定でOptionにしている -->
+					<select disabled="disabled" 
+						class="form-control" id="eventsNameSelect" name="eventsNameId">
+						<option value=""></option>
+						<option  th:each="item : ${EventsName_SelectList}"
+									 th:value="${item.key}"
+									 th:text="${item.value}"
+									 th:selected="${item.key} == *{eventsNameId}"></option>
+					</select>
+				</td>
 				<td th:text="*{trainingStartTime}"></td>
-				<td th:text="*{eventsName}"></td>
 			</tr>
 		</tbody>
 	</table>

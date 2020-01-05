@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.iwatakhr.mslmgt.application.dto.TrgRecordListDto;
+import com.iwatakhr.mslmgt.infrastructure.entity.TrgRecordDetailEntity;
 import com.iwatakhr.mslmgt.infrastructure.entity.TrgRecordEntity;
 import com.iwatakhr.mslmgt.infrastructure.repository.TrgRecordRepository;
 
@@ -23,7 +24,19 @@ public class TrgRecordListApplicationImpl implements TrgRecordListApplication{
 
 	@Override
 	public List<TrgRecordListDto> show() {
-		return mock2();
+		// TODO 固定で岩田で検索する
+		List<TrgRecordEntity> entityList= trgRecordRepo.findByPersonalId(1);
+		List<TrgRecordListDto> arrayList = new ArrayList<TrgRecordListDto>();
+		for(TrgRecordEntity en : entityList) {
+			TrgRecordListDto d = new TrgRecordListDto();
+			d.setEventsNameId(String.valueOf(en.getTraining_events_id()));
+			// TODO formにあわせLocalDateTimeでマッピングしたい
+			LocalDateTime _t = en.getTraining_start_time();
+			d.setTrainingStartTime(_t.format(DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm:ss")));
+			arrayList.add(d);
+		}
+		return arrayList;
+//		return mock2();
 //		return mock1();
 	}
 	
@@ -34,7 +47,7 @@ public class TrgRecordListApplicationImpl implements TrgRecordListApplication{
 		List<TrgRecordListDto> arrayList = new ArrayList<TrgRecordListDto>();
 		for(TrgRecordEntity en : entityList) {
 			TrgRecordListDto d = new TrgRecordListDto();
-			d.setEventsName(en.getEvents_name());
+			d.setEventsNameId(String.valueOf(en.getTraining_events_id()));
 			LocalDateTime _t = en.getTraining_start_time();
 			d.setTrainingStartTime(_t.format(DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm:ss")));
 			arrayList.add(d);
@@ -45,13 +58,13 @@ public class TrgRecordListApplicationImpl implements TrgRecordListApplication{
 	ArrayList<TrgRecordListDto> mock1(){
 		TrgRecordListDto d1 = new TrgRecordListDto() {
 			{
-				setEventsName("ペクトラル");
+				setEventsNameId("ペクトラル");
 				setTrainingStartTime("2019/12/1 15:36");
 			}
 		};
 		TrgRecordListDto d2 = new TrgRecordListDto() {
 			{
-				setEventsName("二頭筋");
+				setEventsNameId("二頭筋");
 				setTrainingStartTime("'2019/12/1 14:36");
 			}
 		};
