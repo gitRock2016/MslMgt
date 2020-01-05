@@ -27,6 +27,8 @@
 
 		<div class="form-group">
 			<button class="btn btn-primary" id="regBtn">新規登録</button>
+			<a th:href="@{/TrgRecordList/show}" class="btn btn-default" role="button">キャンセル</a>
+			<a th:href="@{/}" class="btn btn-default" role="button">TOPへ</a>
 		</div>
 
 		<!-- 種目 -->
@@ -44,10 +46,13 @@
 	
 		<!-- 日付 -->
 		<div class="form-group">
+			<label class="control-label ">トレーニング開始日時：</label><br>
 			<input type="datetime-local" name="trainingStartTime" step="60" />
 		</div>
 		
 		<!-- 詳細List -->
+		<div class="form-group">
+		<label class="control-label ">トレーニング重量×回数：</label>
 		<table class="table table-bordered table-condensed table-hover">
 			<thead>
 				<tr>
@@ -66,6 +71,7 @@
 				</tr>
 			</tbody>
 		</table>
+		</div>
 	</form>
 </div>
 </body>
