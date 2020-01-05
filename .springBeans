@@ -9,7 +9,9 @@
 	<configs>
 	</configs>
 	<autoconfigs>
+		<config>java:com.iwatakhr.mslmgt.presentation.controller.TrgRecordListRegistEditController</config>
 		<config>java:com.iwatakhr.mslmgt.MslMgtV2Application</config>
+		<config>java:com.iwatakhr.mslmgt.presentation.controller.TrgRecordListController</config>
 	</autoconfigs>
 	<configSets>
 	</configSets>

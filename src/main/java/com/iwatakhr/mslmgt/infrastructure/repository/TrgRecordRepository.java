@@ -25,9 +25,18 @@ import com.iwatakhr.mslmgt.infrastructure.entity.TrgRecordEntity;
 @Mapper
 public interface TrgRecordRepository {
 	
+	/**
+	 * トレーニングレコードIDの最大値を取得する
+	 * @return
+	 */
 	@Select("select max(training_record_id) from mslmgt.training_records")
 	Integer countMaxTrgReocords();
 	
+	/**
+	 * トレーニング記録IDより、トレーニング情報を取得する
+	 * @param trgRecordId
+	 * @return
+	 */
 	@Select("select"
 			+"  trds.training_record_id "
 			+ ",trds.training_start_time "
@@ -39,10 +48,12 @@ public interface TrgRecordRepository {
 			+ "       trds.training_events_id=tevs.training_events_id"
 			+ " and tevs.part_id=pm.part_id"
 			+ " and trds.training_record_id=#{trgRecordId}")
-			List<TrgRecordEntity> findByTrgRecordId(Integer trgRecordId);
+			TrgRecordEntity findByTrgRecordId(Integer trgRecordId);
 	
 	/**
-	 * findByTrgRecordId」と条件が違うだけ、他は同じ。
+	 * 個人情報IDより、トレーニング情報を取得する
+	 * ※「findByTrgRecordId」と検索条件以外は同じ
+	 * TODO 動的SQLを利用して、findByTrgRecordIdとメソッドを統一したい
 	 * @param personalId
 	 * @return
 	 */
@@ -58,7 +69,8 @@ public interface TrgRecordRepository {
 			+ " and tevs.part_id=pm.part_id"
 			+ " and trds.personal_id=#{personalId}")
 		List<TrgRecordEntity> findByPersonalId(Integer personalId);
-		
+	
+	// mslmgt.training_recordsテーブルへの登録処理
 	@Insert("INSERT INTO mslmgt.training_records"
 			+ "( training_record_id"
 			+ ", personal_id"
@@ -81,6 +93,7 @@ public interface TrgRecordRepository {
 			,LocalDateTime system_insert_time
 			,LocalDateTime sysytem_update_time);
 	
+	// mslmgt.training_record_detailテーブルへの登録処理
 	@Insert("INSERT INTO mslmgt.training_record_detail"
 			+ "( training_record_id"
 			+ ", seq"
@@ -103,7 +116,7 @@ public interface TrgRecordRepository {
 			,LocalDateTime system_insert_time
 			,LocalDateTime  sysytem_update_time);
 	
-	
+	// トレーニング記録詳細を取得する
 	@Select("SELECT"
 			+ "  trd.training_record_id"
 			+ ", trd.seq"

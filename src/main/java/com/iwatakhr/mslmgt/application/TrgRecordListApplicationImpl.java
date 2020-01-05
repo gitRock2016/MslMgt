@@ -8,9 +8,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.iwatakhr.mslmgt.application.dto.TrgRecordListDto;
-import com.iwatakhr.mslmgt.infrastructure.entity.TrgRecordDetailEntity;
 import com.iwatakhr.mslmgt.infrastructure.entity.TrgRecordEntity;
 import com.iwatakhr.mslmgt.infrastructure.repository.TrgRecordRepository;
+import com.iwatakhr.mslmgt.mock.MockValue;
 
 @Service
 public class TrgRecordListApplicationImpl implements TrgRecordListApplication{
@@ -24,11 +24,12 @@ public class TrgRecordListApplicationImpl implements TrgRecordListApplication{
 
 	@Override
 	public List<TrgRecordListDto> show() {
-		// TODO 固定で岩田で検索する
-		List<TrgRecordEntity> entityList= trgRecordRepo.findByPersonalId(1);
+		// TODO ログイン時の認証情報から個人情報を取得したい
+		List<TrgRecordEntity> entityList= trgRecordRepo.findByPersonalId(MockValue.PERSONALID);
 		List<TrgRecordListDto> arrayList = new ArrayList<TrgRecordListDto>();
 		for(TrgRecordEntity en : entityList) {
 			TrgRecordListDto d = new TrgRecordListDto();
+			// TODO eventsNameIdはInteger型で扱いたい
 			d.setEventsNameId(String.valueOf(en.getTraining_events_id()));
 			// TODO formにあわせLocalDateTimeでマッピングしたい
 			LocalDateTime _t = en.getTraining_start_time();
@@ -40,10 +41,12 @@ public class TrgRecordListApplicationImpl implements TrgRecordListApplication{
 //		return mock1();
 	}
 	
+	
+	
 	// TODO mock
 	List<TrgRecordListDto> mock2(){
 
-		List<TrgRecordEntity> entityList = trgRecordRepo.findByTrgRecordId(1);
+		List<TrgRecordEntity> entityList = trgRecordRepo.findByPersonalId(MockValue.PERSONALID);
 		List<TrgRecordListDto> arrayList = new ArrayList<TrgRecordListDto>();
 		for(TrgRecordEntity en : entityList) {
 			TrgRecordListDto d = new TrgRecordListDto();
