@@ -8,9 +8,12 @@
 <title>トレーニング記録一覧</title>
 </head>
 <body>
+<div class="container-fluid">
 	<h1>トレーニング記録一覧</h1>
-	<div class="btn-group" role="group">
-		<a th:href="@{/TrgRecordListRegistEdit/show}" class="btn btn-default" role="button">新規登録</a>
+	<div class="form-group">
+		<div class="btn-group" role="group">
+			<a th:href="@{/TrgRecordListRegistEdit/show}" class="btn btn-default" role="button">新規登録</a>
+		</div>
 	</div>
 	<table class="table table-bordered table-condensed table-hover">
 		<thead>
@@ -21,7 +24,7 @@
 		</thead>
 		<tbody>
 			<tr th:each="trgRecord : ${trgRecordList}" th:object="${trgRecord}">
-				<td>
+				<td >
 					<!-- TODO Linkに変更すること、暫定でOptionにしている -->
 					<select disabled="disabled" 
 						class="form-control" id="eventsNameSelect" name="eventsNameId">
@@ -36,5 +39,7 @@
 			</tr>
 		</tbody>
 	</table>
+</div>
+	
 </body>
 </html>

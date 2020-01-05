@@ -17,6 +17,7 @@
 	})
 </script>
 <body>
+<div class="container-fluid">
 	<h1>トレーニング記録登録</h1>
 	
 	<!-- TODO 動作確認、th:action指定しているからaction属性はいらないのでは？ -->
@@ -24,13 +25,15 @@
 		th:action="@{/TrgRecordListRegistEdit/regist}" th:object="${trgRecordListRegistEdit}"
 		method="post" id ="TrgRecordListRegistEditForm">
 
-		<button class="btn btn-primary" id="regBtn">新規登録</button>
+		<div class="form-group">
+			<button class="btn btn-primary" id="regBtn">新規登録</button>
+		</div>
 
 		<!-- 種目 -->
 		<div class="form-group">
-			<label class="control-label" for="eventsNameSelect">種目：</label>
+			<label class="control-label " for="eventsNameSelect">種目：</label>
 			<select
-				class="form-control" id="eventsNameSelect" name="eventsNameId">
+				class="form-control " id="eventsNameSelect" name="eventsNameId" >
 				<option value=""></option>
 				<option th:each="item : ${EventsName_SelectList}"
 							 th:value="${item.key}"
@@ -41,7 +44,7 @@
 	
 		<!-- 日付 -->
 		<div class="form-group">
-			<input type="datetime-local" name="trainingStartTime" step="60"/>
+			<input type="datetime-local" name="trainingStartTime" step="60" />
 		</div>
 		
 		<!-- 詳細List -->
@@ -56,13 +59,14 @@
 			</thead>
 			<tbody>
 				<tr th:each="row, stat : *{detailForms}" th:object="${row}">
-					<td ><span th:text="${stat.count}"></span></td>
-					<td><input type="number"  th:value="*{weight}" th:name="${'detailForms[' + stat.index + '].weight' }" step="0.01"></td>
-					<td><input type="number"  th:value="*{count}" th:name="${'detailForms[' + stat.index + '].count' }" step="0.01"></td>
-					<td><button class="btn btn-primary" >削除</button></td>
+					<td class="col-xs-6 col-md-1"><span th:text="${stat.count}"></span></td>
+					<td class="col-xs-6 col-md-5"><input type="number"  th:value="*{weight}" th:name="${'detailForms[' + stat.index + '].weight' }" step="0.01"></td>
+					<td class="col-xs-6 col-md-5"><input type="number"  th:value="*{count}" th:name="${'detailForms[' + stat.index + '].count' }" step="0.01"></td>
+					<td class="col-xs-6 col-md-1"><button class="btn btn-primary" >削除</button></td>
 				</tr>
 			</tbody>
 		</table>
 	</form>
+</div>
 </body>
 </html>
