@@ -59,7 +59,8 @@ public class TrgRecordListRegistEditApplicationImpl implements TrgRecordListRegi
 	public void regist(TrgRecordListRegistEditDto dto) {
 		// training_recordsテーブルへ登録
 		Integer training_record_id = trgRecordRepository.countMaxTrgReocords() + 1;
-		Integer personal_id = MockValue.PERSONALID; // TODO 固定とする、岩田
+		// TODO 個人情報IDはログイン情報から取得できるようにする
+		Integer personal_id = MockValue.PERSONALID; 
 		LocalDateTime training_start_time = dto.getTrainingStartTime();
 		// TODO eventsNameIdはIntegerで統一したい
 		Integer training_events_id=Integer.parseInt(dto.getEventsNameId());
