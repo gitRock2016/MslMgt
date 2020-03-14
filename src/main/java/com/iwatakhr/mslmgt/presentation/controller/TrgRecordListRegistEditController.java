@@ -1,5 +1,7 @@
 package com.iwatakhr.mslmgt.presentation.controller;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -35,10 +37,16 @@ public class TrgRecordListRegistEditController {
 	@GetMapping("/show")
 	public String show(TrgRecordListRegistEditForm form, Model model) {
 		
-		model.addAttribute("trgRecordListRegistEdit", new TrgRecordListRegistEditForm());
+		// 初期表示時のデフォルト設定
+		// 開始時刻（「yyyyMMddHHmm」までを指定）
+		LocalDateTime defaultStartTime = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
+		form.setTrainingStartTime(defaultStartTime);
+		
+		model.addAttribute("trgRecordListRegistEdit", form);
 		model.addAttribute("EventsName_SelectList", MockValue.EventsName_SelectList);
 		return "/mslmgt/trgRecordListRegistEdit";
 	}
+
 
 	/**
 	 * 初期表示
