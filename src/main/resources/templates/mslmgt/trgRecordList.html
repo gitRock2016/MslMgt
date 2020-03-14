@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script src="/MslMgt/webjars/jquery/3.1.1/jquery.min.js"></script>
+<script src="/MslMgt/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/MslMgt/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+<title>トレーニング記録一覧</title>
+</head>
+<body>
+<div class="container-fluid">
+	<h1>トレーニング記録一覧</h1>
+	<div class="form-group">
+		<div class="btn-group" role="group">
+			<a th:href="@{/TrgRecordListRegistEdit/show}" class="btn btn-default" role="button">新規登録</a>
+			<a th:href="@{/}" class="btn btn-default" role="button">TOPへ</a>
+		</div>
+	</div>
+	<table class="table table-bordered table-condensed table-hover">
+		<thead>
+			<tr>
+				<th>種目</th>
+				<th>日付</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="trgRecord : ${trgRecordList}" th:object="${trgRecord}">
+				<td >
+					<!-- TODO Linkに変更すること、暫定でOptionにしている -->
+					<select disabled="disabled" 
+						class="form-control" id="eventsNameSelect" name="eventsNameId">
+						<option value=""></option>
+						<option  th:each="item : ${EventsName_SelectList}"
+									 th:value="${item.key}"
+									 th:text="${item.value}"
+									 th:selected="${item.key} == *{eventsNameId}"></option>
+					</select>
+				</td>
+				<td th:text="*{trainingStartTime}"></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+	
+</body>
+</html>

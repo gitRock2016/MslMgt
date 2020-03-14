@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script src="/MslMgt/webjars/jquery/3.1.1/jquery.min.js"></script>
+<script src="/MslMgt/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/MslMgt/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+<title>トレーニング記録登録</title>
+</head>
+<script>
+	$(function() {
+
+		$("#regBtn").on('click', function() {
+			$("#TrgRecordListRegistEditForm").submit();
+		});
+
+	})
+</script>
+<body>
+<div class="container-fluid">
+	<h1>トレーニング記録登録</h1>
+	
+	<!-- TODO 動作確認、th:action指定しているからaction属性はいらないのでは？ -->
+	<form role="form" action="/TrgRecordListRegistEdit/regist"
+		th:action="@{/TrgRecordListRegistEdit/regist}" th:object="${trgRecordListRegistEdit}"
+		method="post" id ="TrgRecordListRegistEditForm">
+
+		<div class="form-group">
+			<button class="btn btn-primary" id="regBtn">新規登録</button>
+			<a th:href="@{/TrgRecordList/show}" class="btn btn-default" role="button">キャンセル</a>
+			<a th:href="@{/}" class="btn btn-default" role="button">TOPへ</a>
+		</div>
+
+		<!-- 種目 -->
+		<div class="form-group">
+			<label class="control-label " for="eventsNameSelect">種目：</label>
+			<select
+				class="form-control " id="eventsNameSelect" name="eventsNameId" >
+				<option value=""></option>
+				<option th:each="item : ${EventsName_SelectList}"
+							 th:value="${item.key}"
+							 th:text="${item.value}"
+							 th:selected="${item.key} == *{eventsNameId}"></option>
+			</select>
+		</div>
+	
+		<!-- 日付 -->
+		<div class="form-group">
+			<label class="control-label ">トレーニング開始日時：</label><br>
+			<input type="datetime-local" name="trainingStartTime" step="60" />
+		</div>
+		
+		<!-- 詳細List -->
+		<div class="form-group">
+		<label class="control-label ">トレーニング重量×回数：</label>
+		<table class="table table-bordered table-condensed table-hover">
+			<thead>
+				<tr>
+					<th>Seq</th>
+					<th>Kg</th>
+					<th>回数</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="row, stat : *{detailForms}" th:object="${row}">
+					<td class="col-xs-6 col-md-1"><span th:text="${stat.count}"></span></td>
+					<td class="col-xs-6 col-md-5"><input type="number"  th:value="*{weight}" th:name="${'detailForms[' + stat.index + '].weight' }" step="0.01"></td>
+					<td class="col-xs-6 col-md-5"><input type="number"  th:value="*{count}" th:name="${'detailForms[' + stat.index + '].count' }" step="0.01"></td>
+					<td class="col-xs-6 col-md-1"><button class="btn btn-primary" >削除</button></td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+	</form>
+</div>
+</body>
+</html>
