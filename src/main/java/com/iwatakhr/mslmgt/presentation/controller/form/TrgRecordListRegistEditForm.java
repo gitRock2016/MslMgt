@@ -4,14 +4,20 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class TrgRecordListRegistEditForm {
 
-	// TODO 単項目チェックをいれたい
+	@NotBlank
 	private String eventsNameId;
+	
+	@NotNull
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private LocalDateTime trainingStartTime;
+	
 	private List<TrgRecordListRegistEditDetailForm> detailForms;
 
 	public TrgRecordListRegistEditForm() {

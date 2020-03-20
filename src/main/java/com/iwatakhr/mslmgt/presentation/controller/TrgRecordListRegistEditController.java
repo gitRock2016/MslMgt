@@ -2,10 +2,15 @@ package com.iwatakhr.mslmgt.presentation.controller;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,7 +26,9 @@ import com.iwatakhr.mslmgt.presentation.controller.form.TrgRecordListRegistEditF
 @RequestMapping("/TrgRecordListRegistEdit")
 public class TrgRecordListRegistEditController {
 	
-
+	@Autowired
+	MessageSource msg;
+	
 	TrgRecordListRegistEditApplication trgRecordListRegistEditApplication;
 	
 	public TrgRecordListRegistEditController(TrgRecordListRegistEditApplication trgRecordListRegistEditApplication) {
@@ -35,7 +42,7 @@ public class TrgRecordListRegistEditController {
 	@GetMapping("/show")
 	public String show(TrgRecordListRegistEditForm form, Model model) {
 		
-		model.addAttribute("trgRecordListRegistEdit", new TrgRecordListRegistEditForm());
+		model.addAttribute("trgRecordListRegistEditForm", new TrgRecordListRegistEditForm());
 		model.addAttribute("EventsName_SelectList", MockValue.EventsName_SelectList);
 		return "/mslmgt/trgRecordListRegistEdit";
 	}
@@ -47,8 +54,13 @@ public class TrgRecordListRegistEditController {
 	 * @return
 	 */
 	@PostMapping("/regist")
-	public String regist(TrgRecordListRegistEditForm form, Model model) {
+	public String regist(@ModelAttribute @Validated TrgRecordListRegistEditForm form, BindingResult result,Model model) {
 		
+		if(result.hasErrors()) {
+			model.addAttribute("trgRecordListRegistEditForm", form);
+			model.addAttribute("EventsName_SelectList", MockValue.EventsName_SelectList);
+			return "/mslmgt/trgRecordListRegistEdit";
+		}
 		// form→dtoへマッピング
 		TrgRecordListRegistEditDto dto =new TrgRecordListRegistEditDto();
 		dto.setEventsNameId(form.getEventsNameId());

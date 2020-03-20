@@ -19,12 +19,13 @@
 <body>
 <div class="container-fluid">
 	<h1>トレーニング記録登録</h1>
-	
-	<!-- TODO 動作確認、th:action指定しているからaction属性はいらないのでは？ -->
-	<form role="form" action="/TrgRecordListRegistEdit/regist"
-		th:action="@{/TrgRecordListRegistEdit/regist}" th:object="${trgRecordListRegistEdit}"
-		method="post" id ="TrgRecordListRegistEditForm">
 
+
+		<!-- TODO 動作確認、th:action指定しているからaction属性はいらないのでは？ -->
+	<form role="form" action="/TrgRecordListRegistEdit/regist"
+		th:action="@{/TrgRecordListRegistEdit/regist}" th:object="${trgRecordListRegistEditForm}"
+		method="post" id ="TrgRecordListRegistEditForm">
+	
 		<div class="form-group">
 			<button class="btn btn-primary" id="regBtn">新規登録</button>
 			<a th:href="@{/TrgRecordList/show}" class="btn btn-default" role="button">キャンセル</a>
@@ -42,12 +43,14 @@
 							 th:text="${item.value}"
 							 th:selected="${item.key} == *{eventsNameId}"></option>
 			</select>
+			<span id="eventsNameId_er" th:errors="*{eventsNameId}" style="color: red"> </span>
 		</div>
-	
+		
 		<!-- 日付 -->
 		<div class="form-group">
 			<label class="control-label ">トレーニング開始日時：</label><br>
 			<input type="datetime-local" name="trainingStartTime" step="60" />
+			 <span id="trainingStartTime_er" th:errors="*{trainingStartTime}" style="color: red"></span>
 		</div>
 		
 		<!-- 詳細List -->
