@@ -68,12 +68,29 @@
 			<tbody>
 				<tr th:each="row, stat : *{detailForms}" th:object="${row}">
 					<td class="col-xs-6 col-md-1"><span th:text="${stat.count}"></span></td>
-					<td class="col-xs-6 col-md-5"><input type="number"  th:value="*{weight}" th:name="${'detailForms[' + stat.index + '].weight' }" step="0.01"></td>
-					<td class="col-xs-6 col-md-5"><input type="number"  th:value="*{count}" th:name="${'detailForms[' + stat.index + '].count' }" step="0.01"></td>
+					<td class="col-xs-6 col-md-5">
+<!-- 						<input type="number"  th:value="*{weight}" th:name="${'detailForms[' + stat.index + '].weight' }" step="0.01"> -->
+						<input type="number"  th:value="*{weight}" th:name="${'detailForms[' + stat.index + '].weight' }" step="0.01">
+						<span th:errors="**{weight}" style="color: red"> </span>
+						<!-- <span th:errors="${row.detailForms[__${stat.index}__].weight}" style="color: red"> </span> -->
+					</td>
+					<td class="col-xs-6 col-md-5">
+						<input type="number"  th:value="*{count}" th:name="${'detailForms[' + stat.index + '].count' }" step="0.01">
+						<!-- <span th:errors="*{count}" style="color: red"> </span> -->
+<!-- 						<span th:if="${#fields.hasErrors('detailForms[__${stat.index}__].count')}" 
+							th:errors="${row.detailForms[__${stat.index}__].count}" style="color: red"> </span> -->
+					</td>
 					<td class="col-xs-6 col-md-1"><button class="btn btn-primary" >削除</button></td>
 				</tr>
 			</tbody>
 		</table>
+		<ul>
+			<li th:each="error : ${#fields.detailedErrors()}">
+				<span th:text="${error.message}">Error message</span>
+			</li>
+		</ul>
+		<span th:if="${#fields.hasErrors('detailForms[2].count')}" th:errors="*{detailForms[2].count}" style="color: red"></span>
+		
 		</div>
 	</form>
 </div>

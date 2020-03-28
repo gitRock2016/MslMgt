@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -18,6 +19,7 @@ public class TrgRecordListRegistEditForm {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private LocalDateTime trainingStartTime;
 	
+	@Valid
 	private List<TrgRecordListRegistEditDetailForm> detailForms;
 
 	public TrgRecordListRegistEditForm() {
