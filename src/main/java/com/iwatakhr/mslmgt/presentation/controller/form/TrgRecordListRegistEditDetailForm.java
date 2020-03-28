@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull;
 
 public class TrgRecordListRegistEditDetailForm {
 	
-	// TODO 単項目チェックをいれたい
 	@NotBlank
 	private String weight;
 	@NotNull
