@@ -4,10 +4,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class TrgRecordListRegistEditDetailForm {
-	
-	@NotBlank
+
+// 相関チェックでチェックできるため必須チェックを外す
+//	@NotBlank
 	private String weight;
-	@NotNull
+
+// 相関チェックでチェックできるため必須チェックを外す
+//	@NotNull
 	private Integer count;
 
 	public String getWeight() {
