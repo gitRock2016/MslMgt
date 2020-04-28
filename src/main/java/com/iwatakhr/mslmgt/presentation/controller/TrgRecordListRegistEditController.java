@@ -1,5 +1,6 @@
 package com.iwatakhr.mslmgt.presentation.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import com.iwatakhr.mslmgt.mock.MockValue;
 import com.iwatakhr.mslmgt.presentation.controller.form.TrgRecordListRegistEditDetailForm;
 import com.iwatakhr.mslmgt.presentation.controller.form.TrgRecordListRegistEditForm;
 import com.iwatakhr.mslmgt.presentation.controller.validator.TrgRecordDetailFormsIsBlankValidator;
+import com.iwatakhr.mslmgt.presentation.controller.validator.TrgRecordLsitRegistEditFormTimeValidator;
 
 @Controller
 @EnableAutoConfiguration
@@ -31,7 +33,10 @@ public class TrgRecordListRegistEditController {
 	
 	@Autowired
     TrgRecordDetailFormsIsBlankValidator trgRecordDetailFormsIsBlankValidator;
+	@Autowired
+	TrgRecordLsitRegistEditFormTimeValidator trgRecordLsitRegistEditFormTimeValidator;
 
+	
 	@Autowired
 	MessageSource msg;
 	
@@ -42,9 +47,14 @@ public class TrgRecordListRegistEditController {
 		this.trgRecordListRegistEditApplication = trgRecordListRegistEditApplication;
 	}
 	
-	@InitBinder("TrgRecordListRegistEditDetailForm")
+//	@InitBinder("TrgRecordListRegistEditDetailForm")
+//	public void validatorBinder(WebDataBinder binder) {
+//		binder.addValidators(trgRecordDetailFormsIsBlankValidator);
+//	}
+//	@InitBinder("TrgRecordListRegistEditForm")
+	@InitBinder
 	public void validatorBinder(WebDataBinder binder) {
-		binder.addValidators(trgRecordDetailFormsIsBlankValidator);
+		binder.addValidators(trgRecordLsitRegistEditFormTimeValidator);
 	}
 	
 	/**
@@ -72,6 +82,7 @@ public class TrgRecordListRegistEditController {
 			model.addAttribute("EventsName_SelectList", MockValue.EventsName_SelectList);
 			return "/mslmgt/trgRecordListRegistEdit";
 		}
+
 		// form→dtoへマッピング
 		TrgRecordListRegistEditDto dto =new TrgRecordListRegistEditDto();
 		dto.setEventsNameId(form.getEventsNameId());
